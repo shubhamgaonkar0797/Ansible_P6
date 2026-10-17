@@ -140,11 +140,3 @@ ansible-playbook playbooks/aws-resources.yml
 ## Learning Outcomes
 
 This project demonstrates practical experience with Ansible inventory, ad-hoc commands, YAML playbooks, variables, Jinja2 templates, handlers, Linux configuration management, SSH connectivity, and AWS automation.
-
-## Author
-
-**Shubham Gaonkar**
-
-## Repository
-
-[ContentSphere Ansible Project — GitHub](https://github.com/shubhamgaonkar0797/Ansible_P6)
