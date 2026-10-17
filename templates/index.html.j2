@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} | DevOps Platform</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #eaf2ff;
+        }
+        header {
+            padding: 22px 8%;
+            background: #0b1224;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 23px; font-weight: bold; }
+        .logo span { color: #60a5fa; }
+        .status { color: #86efac; font-size: 13px; }
+        .hero {
+            padding: 75px 8%;
+            background: linear-gradient(125deg, #0b1224, #163b73, #4f46a5);
+        }
+        .tag {
+            color: #93c5fd;
+            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        h1 { font-size: clamp(38px, 6vw, 64px); margin: 18px 0; }
+        .hero p { max-width: 620px; line-height: 1.8; color: #dbeafe; }
+        .button {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 13px 22px;
+            background: #60a5fa;
+            color: #0b1224;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+        main { padding: 35px 8%; color: #172033; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 18px;
+        }
+        .card {
+            background: white;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px #0f172a0a;
+        }
+        .card h3 { margin-top: 0; }
+        .number { font-size: 25px; font-weight: bold; color: #2563eb; }
+        .tools { margin-top: 38px; }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+        }
+        .tool {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #e2e8f0;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #0b1224;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">◈ <span>{{ app_name }}</span></div>
+        <div class="status">● SERVER CONFIGURED BY ANSIBLE</div>
+    </header>
+
+    <section class="hero">
+        <div class="tag">DEVOPS AUTOMATION PLATFORM</div>
+        <h1>Build. Deploy.<br>Scale.</h1>
+        <p>
+            Welcome to {{ app_name }} — a demonstration of automated
+            web server configuration using Ansible, Nginx and Jinja2.
+            Change your configuration through reusable variables.
+        </p>
+        <a class="button" href="#platform">Explore Platform →</a>
+    </section>
+
+    <main id="platform">
+        <h2>Infrastructure Overview</h2>
+        <div class="stats">
+            <div class="card">
+                <h3>Application</h3>
+                <div class="number">{{ app_name }}</div>
+            </div>
+            <div class="card">
+                <h3>Web Port</h3>
+                <div class="number">{{ web_port }}</div>
+            </div>
+            <div class="card">
+                <h3>Web Server</h3>
+                <div class="number">Nginx</div>
+            </div>
+            <div class="card">
+                <h3>Configuration</h3>
+                <div class="number">Automated</div>
+            </div>
+        </div>
+
+        <section class="tools">
+            <h2>Your DevOps Toolchain</h2>
+            <div class="tools-grid">
+                <div class="tool">Git & GitHub</div>
+                <div class="tool">Jenkins</div>
+                <div class="tool">Docker</div>
+                <div class="tool">Kubernetes</div>
+                <div class="tool">Terraform</div>
+                <div class="tool">Ansible</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        {{ app_name }} · Infrastructure, automated with Ansible
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+
+---
+- name: Automate ContentSphere AWS Resources
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - ../vars/aws.yml
+
+  tasks:
+    - name: Create an EC2 instance
+      amazon.aws.ec2_instance:
+        name: "ansible_P6"
+        region: ap-south-1
+        instance_type: t3.micro
+        image_id: ami-01a00762f46d584a1
+        key_name: General
+        network:
+          assign_public_ip: true
+        wait: true
+        state: running
+        tags:
+          Project: ContentSphere
+          ManagedBy: Ansible
+      register: ec2_result
+
+    - name: Show created EC2 instance details
+      ansible.builtin.debug:
+        var: ec2_result.instances
+
+    - name: Create S3 bucket
+      amazon.aws.s3_bucket:
+        name: buck202610
+        region: ap-south-1
+        state: present
+      register: s3_result
+
+    - name: Upload ContentSphere project file to S3
+      amazon.aws.s3_object:
+        bucket: buck202610
+        object: contentsphere.txt
+        src: "{{ playbook_dir }}/../files/contentsphere.txt"
+        mode: put
+        region: ap-south-1
+
+    - name: Verify uploaded file in S3
+      amazon.aws.s3_object:
+        bucket: buck202610
+        object: contentsphere.txt
+        mode: getstr
+        region: ap-south-1
+      register: s3_file
+
+    - name: Show uploaded file content
+      ansible.builtin.debug:
+        var: s3_file.contents
+

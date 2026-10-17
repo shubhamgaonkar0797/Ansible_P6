@@ -1,0 +1,3 @@
+app_name: "ContentSphere Cloud"
+app_directory: "/var/www/contentsphere"
+web_port: 80

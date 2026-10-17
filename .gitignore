@@ -1,0 +1,10 @@
+.env
+*.pem
+*.key
+.aws/
+credentials
+.terraform/
+*.tfstate
+*.tfstate.*
+*.retry
+__pycache__/

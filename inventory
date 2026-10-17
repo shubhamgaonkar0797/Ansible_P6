@@ -1,0 +1,2 @@
+[webserver]
+managed_node ansible_host=172.31.5.59 ansible_user=ubuntu

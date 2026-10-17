@@ -1,0 +1,4 @@
+ContentSphere AWS Automation Project
+Managed using Ansible
+AWS Region: ap-south-1
+Resources: Amazon EC2 and Amazon S3

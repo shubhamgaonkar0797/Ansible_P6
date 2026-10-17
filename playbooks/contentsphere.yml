@@ -1,0 +1,115 @@
+
+---
+- name: Configure ContentSphere Web Server
+  hosts: webserver
+  become: true
+
+  tasks:
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Create ContentSphere application directory
+      ansible.builtin.file:
+        path: /var/www/contentsphere
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: "0755"
+
+    - name: Deploy ContentSphere webpage
+      ansible.builtin.copy:
+        dest: /var/www/contentsphere/index.html
+        owner: www-data
+        group: www-data
+        mode: "0644"
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>ContentSphere | DevOps Project</title>
+              <style>
+                  body {
+                      font-family: Arial, sans-serif;
+                      background: #f0f4f8;
+                      text-align: center;
+                      padding: 70px 20px;
+                      color: #243247;
+                  }
+                  .card {
+                      max-width: 650px;
+                      margin: auto;
+                      padding: 40px;
+                      background: white;
+                      border-radius: 12px;
+                      box-shadow: 0 4px 18px #00000015;
+                  }
+                  h1 { color: #1769aa; }
+                  .status { color: #16803c; font-weight: bold; }
+              </style>
+          </head>
+          <body>
+              <div class="card">
+                  <h1>Welcome to ContentSphere!</h1>
+                  <p>Your application webpage is deployed successfully.</p>
+                  <p class="status">Nginx Web Server: Running</p>
+                  <p>Managed automatically using Ansible.</p>
+                  <p>DevOps Infrastructure Automation Project</p>
+              </div>
+          </body>
+          </html>
+
+    - name: Configure Nginx for ContentSphere
+      ansible.builtin.copy:
+        dest: /etc/nginx/sites-available/contentsphere
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          server {
+              listen 80 default_server;
+              listen [::]:80 default_server;
+              server_name _;
+              root /var/www/contentsphere;
+              index index.html;
+
+              location / {
+                  try_files $uri $uri/ =404;
+              }
+          }
+      notify: Validate and reload Nginx
+
+    - name: Enable ContentSphere Nginx site
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/contentsphere
+        dest: /etc/nginx/sites-enabled/contentsphere
+        state: link
+      notify: Validate and reload Nginx
+
+    - name: Disable the default Nginx site
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: Validate and reload Nginx
+
+    - name: Start and enable Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Validate and reload Nginx
+      ansible.builtin.command: nginx -t
+      changed_when: false
+      notify: Reload Nginx
+
+    - name: Reload Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+
